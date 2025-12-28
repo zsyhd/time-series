@@ -179,7 +179,7 @@ def timeseries(
     aggregation: str = Query(
         "minute",
         description="Aggregation period: minute (default), hour, or day",
-        regex="^(minute|hour|day)$",
+        pattern="^(minute|hour|day)$",
     ),
     limit: int = Query(
         100,
@@ -287,5 +287,7 @@ def timeseries(
     }
 
 
-# For Vercel: ensure this name exists for detection
-handler = app
+# Do not assign a `handler` variable. Vercel will automatically detect the
+# FastAPI application via the `app` global. Assigning a handler triggers
+# Vercel's BaseHTTPRequestHandler check and results in an `issubclass()`
+# TypeError. See deployment guide for details.
